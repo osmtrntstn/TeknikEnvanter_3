@@ -4,18 +4,15 @@ using System.Reflection;
 using System.Xml.Linq;
 
 
-
-Console.WriteLine("Hello, World!");
-
 int musteriNumarasi = 15000000;
 
-CalistirmaMotoru.KomutCalistir("MuhasebeModulu", "MaasYatir", new object[] { musteriNumarasi, true });
+CalistirmaMotoru.KomutCalistir(NameConstants.MuhasebeModulu, NameConstants.MaasYatir, new object[] { musteriNumarasi, true });
 
-CalistirmaMotoru.KomutCalistir("MuhasebeModulu", "YillikUcretTahsilEt", new object[] { musteriNumarasi, true });
+CalistirmaMotoru.KomutCalistir(NameConstants.MuhasebeModulu,NameConstants.YillikUcretTahsilEt, new object[] { musteriNumarasi, true });
 
-CalistirmaMotoru.KomutCalistir("MuhasebeModulu", "YillikUcretTahsilEt", new object[] { musteriNumarasi, false });
+CalistirmaMotoru.KomutCalistir(NameConstants.MuhasebeModulu, NameConstants.YillikUcretTahsilEt, new object[] { musteriNumarasi, false });
 
-CalistirmaMotoru.BekleyenİşlemleriGerçekleştir();
+CalistirmaMotoru.BekleyenIslemleriGerceklestir();
 
 
 
@@ -31,7 +28,7 @@ public class CalistirmaMotoru
 
         if (inputs.Length > 1 && (bool)inputs[1])
         {
-            new Veritabanıİşlemleri().AddWaitingJob(modulSinifAdi, methodAdi, (int)inputs[0]);
+            new VeritabaniIslemleri().AddWaitingJob(modulSinifAdi, methodAdi, (int)inputs[0]);
         }
         else
         {
@@ -40,9 +37,9 @@ public class CalistirmaMotoru
         return inputs;
     }
 
-    public static void BekleyenİşlemleriGerçekleştir()
+    public static void BekleyenIslemleriGerceklestir()
     {
-        Veritabanıİşlemleri veritabanıİşlemleri = new Veritabanıİşlemleri();
+        VeritabaniIslemleri veritabanıİşlemleri = new VeritabaniIslemleri();
         var waitingJobs = veritabanıİşlemleri.GetWaitingJobs();
 
         foreach (var item in waitingJobs)
@@ -95,14 +92,14 @@ public class MuhasebeModulu
         Console.WriteLine("{0} numaralı müşteriden yıllık kart ücreti tahsil edildi.", musteriNumarasi);
     }
 
-    private void OtomatikÖdemeleriGerçekleştir(int musteriNumarasi)
+    private void OtomatikOdemeleriGerceklestir(int musteriNumarasi)
     {
         // gerekli işlemler gerçekleştirilir.
         Console.WriteLine("{0} numaralı müşterinin otomatik ödemeleri gerçekleştirildi.", musteriNumarasi);
     }
 }
 
-public class Veritabanıİşlemleri
+public class VeritabaniIslemleri
 {
     public static List<WaitingJobModel> waitingJobModels = new List<WaitingJobModel>();
 
@@ -132,4 +129,13 @@ public class WaitingJobModel
     public string methodAdi { get; set; }
     public int musteriNumarasi { get; set; }
     public bool jobState { get; set; } = false;
+}
+
+public class NameConstants
+{
+    public const string MuhasebeModulu = "MuhasebeModulu";
+    public const string MaasYatir = "MaasYatir";
+    public const string YillikUcretTahsilEt = "YillikUcretTahsilEt";
+    public const string OtomatikOdemeleriGerceklestir = "OtomatikOdemeleriGerceklestir";
+
 }
